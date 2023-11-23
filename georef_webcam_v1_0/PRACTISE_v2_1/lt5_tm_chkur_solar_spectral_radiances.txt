@@ -1,0 +1,8 @@
+Solar Spectral Irradiances in watts/(meter squared * æm) (generated using the ChKur* solar spectrum)
+Band 	Solar Spectral Irradiance
+1 	1957
+2 	1826
+3 	1554
+4 	1036
+5 	215.0
+7 	80.67

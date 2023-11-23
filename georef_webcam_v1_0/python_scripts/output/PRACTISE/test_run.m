@@ -19,12 +19,12 @@ end                                                                        %KEEP
 if os>0 && is==1                                                            %KEEP
     fin_gcpformat='.gcp.txt';    
 end                                                                        %KEEP
-cam(:,1)=[76.46626,30.96866]; % altitude will be calculated!
+cam(:,1)=[30.96866,76.46626]; % altitude will be calculated!
 if vs==1                                                                   %KEEP
     buffer_radius=100.0; % in  [m]    
 end                                                                        %KEEP
-cam(:,2)=[795.8060603386512,-663.6897104589972]; % altitude will be calculated!
-cam_off=[209,189.67301929153504]; 
+cam(:,2)=[750.3084603386511,-618.1921104589971]; % altitude will be calculated!
+cam_off=[209,156.5922207169588]; 
 cam_rol=-2; 
 cam_foc=0.014;
 cam_hei=0.0149; 

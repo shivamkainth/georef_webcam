@@ -3,11 +3,11 @@
 %
     % incorporating adapted versions of
     %
-    % Aronica, Bates and Horritt, 2002 
+    % Aronica, Bates and Horritt, 2002
     % "Assessing the uncertainty in distributed model predictions using
     % observed binary pattern information within GLUE" (Hydrol Process)
     %
-    % Corripio, 2004 
+    % Corripio, 2004
     % "Snow surface albedo estimation using terrestrial photography"
     % (Int J Rem Sens)
     %
@@ -19,11 +19,11 @@
     % "Snow cover monitoring with images from digital camera systems"
     % (ItJRS)
     %
-    % Tolson and Shoemaker, 2007 
+    % Tolson and Shoemaker, 2007
     % "Dynamically dimensioned search algorithm for computationally
     % efficient watershed model calibration" (WRR)
-    % 
-    % Wang, Robinson and White, 2000 
+    %
+    % Wang, Robinson and White, 2000
     % "Generating Viewsheds without Using Sightliines" (PE&RS)
 %
 %   written by
@@ -82,7 +82,7 @@ elseif size(cam, 2)<2
     error('Camera targetpoint: longitude and latitude position is ', ...
      'not defined.')
 end
-% check if Unix and change "\" to "/" in "fin_..." and "fout_..." in case 
+% check if Unix and change "\" to "/" in "fin_..." and "fout_..." in case
 list=who('-regexp', 'fin_');
 for i=1:length(list)
     assignin('base',char(list(i)),Unix_Slash_PRACTISE(evalin('base',char(list(i)))));
@@ -113,7 +113,7 @@ else
         end
         clear fout_folder_ok1 fout_folder_msg1
     else
-%         uisetpref('clearall'); % to reset dialog box properties 
+%         uisetpref('clearall'); % to reset dialog box properties
         fout_folder_ok1=uigetpref('userhelp', 'ctrlc', 'Hint', ...
         fout_folder_msg1, 'Ok');
         clear fout_folder_ok1
@@ -181,15 +181,15 @@ elseif is == 1
          'automatic blue band classification)'])
     else
         error(['Classification switch option not available, check ', ...
-         'parameter file'])            
+         'parameter file'])
     end
 else
-    error('Image switch option not available, check parameter file')    
+    error('Image switch option not available, check parameter file')
 end
 %   satellite image
 if rs == 0
     disp('- w/o satellite image classification')
-elseif rs == 1 
+elseif rs == 1
     disp(['- w satellite image classification (of unzipped raw ', ...
      'Landsat data) using a NDSI threshold '])
 elseif rs == 2
@@ -197,10 +197,10 @@ elseif rs == 2
      'data) using a NDSI threshold '])
 else
     error(['Remote sensing switch option not available, check ', ...
-     'parameter file'])    
+     'parameter file'])
 end
 if rs > 0
-    if rsps == 1 
+    if rsps == 1
         if cs == 2
             disp(['calibrated by probability values of the snow/no ', ...
              'snow photo map'])
@@ -325,14 +325,14 @@ if exist('fin_imfolder', 'var')
                 if length(list)>1 && (rs>0 || os>1)
                     error(['Optimising the camera location and orientation ', ...
                      'using GCPs or classifying satellite images while ', ...
-                     'processing more than one image does not work.'])              
+                     'processing more than one image does not work.'])
                 end
                 for i=1:length(list)
                     fin_images{i,1}=list(i).name;
                 end
                 clear i list
                 N_images=length(fin_images);
-%           define the first photograph file name (might be the only one) 
+%           define the first photograph file name (might be the only one)
                 fin_image=char(fin_images(1));
                 fin_image=Unix_Slash_PRACTISE(fin_image);
             else
@@ -340,12 +340,12 @@ if exist('fin_imfolder', 'var')
             end
         end
     end
-%      load first photograph (might be the only one) 
+%      load first photograph (might be the only one)
 %           read photo
     disp(['Load photo from folder ''', fin_imagepath, ''''])
-    photo = imread([fin_imagepath, fin_image]); 
+    photo = imread([fin_imagepath, fin_image]);
 %               photo size (pixel rows and columns)
-    [pix_r pix_c dummy]=size(photo); 
+    [pix_r pix_c dummy]=size(photo);
     clear dummy
     if is==1
 %               automatically read root name of file
@@ -353,7 +353,7 @@ if exist('fin_imfolder', 'var')
         f_name=fin_image(1:fin_imageDot(end)-1);
         clear fin_imageDot
         if rs>0
-%               automatically read date and time from photo file name 
+%               automatically read date and time from photo file name
 %                (for check of time shift to raw Landsat data)
             if ~strcmpi(f_name(end-2:end), 'utc')
                 if exist('fin_imagelink', 'var')
@@ -381,8 +381,8 @@ if exist('fin_imfolder', 'var')
                         'min', str2num(time_pos(12:13)), ...
                         'sec', 0, ...
                         'UTC', 0);
-            time_names = fieldnames(time); 
-            for i = 1:length(time_names) 
+            time_names = fieldnames(time);
+            for i = 1:length(time_names)
                 if isempty(time.(time_names{i,1}))
                     error(['Date and Time format of photo file ', ...
                      'name is not correct, check if file name is ', ...
@@ -390,7 +390,7 @@ if exist('fin_imfolder', 'var')
                      fin_imformat, ''''])
                 end
             end
-            clear i time_pos time_names 
+            clear i time_pos time_names
             disp(['Date and time of the photograph in UTC, check ', ...
              'if correct: '])
             disp(time)
@@ -404,7 +404,7 @@ end
 if vs==0
     if is==1
         list=dir([fin_folder, fin_imfolder, '*', fin_vsformat]);
-        if length(list)<1 
+        if length(list)<1
             list=dir([fin_folder, fin_imfolder, '*', '.view.LINK']);
         end
         if length(list)==1
@@ -509,7 +509,7 @@ if rs>0
                 error('Linking file to satellite folder could not be found.')
             end
             fin_satpath=fgetl(fid);
-            fin_satpath=Unix_Slash_PRACTISE(fin_satpath);            
+            fin_satpath=Unix_Slash_PRACTISE(fin_satpath);
             fclose(fid);
         end
     end
@@ -546,14 +546,14 @@ if rs==1
 %           additional Landsat 7  file names (TXT-file)
 %               Earth-Sun distance
             fin_satname_DistEtoS='earth_sun_distance.txt';
-            fin_satname_DistEtoS=Unix_Slash_PRACTISE(fin_satname_DistEtoS);                        
+            fin_satname_DistEtoS=Unix_Slash_PRACTISE(fin_satname_DistEtoS);
 %               Solar spectral irradiances
             if strcmp(fin_satname_meta(1:3), 'LT5')
                 fin_satname_RadSol='lt5_tm_chkur_solar_spectral_radiances.txt';
             elseif strcmp(fin_satname_meta(1:3), 'LE7')
                 fin_satname_RadSol='le7_etm_plus_chkur_solar_spectral_radiances.txt';
             end
-            fin_satname_RadSol=Unix_Slash_PRACTISE(fin_satname_RadSol);                        
+            fin_satname_RadSol=Unix_Slash_PRACTISE(fin_satname_RadSol);
         end
 %       load Landsat files
 %           load Landsat Look image
@@ -566,7 +566,7 @@ if rs==1
                 error('Landsat Look image file could not be found.')
             end
         end
-        if strcmp(fin_satname_meta(1:3), 'LT5') || strcmp(fin_satname_meta(1:3), 'LE7')        
+        if strcmp(fin_satname_meta(1:3), 'LT5') || strcmp(fin_satname_meta(1:3), 'LE7')
 %           load Earth-Sun Distance (according to Landsat 7 handbook)
             disp(['Load Earth-Sun distance from ''', fin_satname_DistEtoS , ''''])
             fid=fopen(fin_satname_DistEtoS);
@@ -593,7 +593,7 @@ if rs==1
             fclose(fid);
             clear ans fid i
         end
-%           load Landsat metadata           
+%           load Landsat metadata
         disp(['Load Landsat metadata from ''', fin_satpath, ...
             fin_satfolder_image, fin_satname_meta, ''''])
         fid=fopen([fin_satpath, fin_satfolder_image, fin_satname_meta]);
@@ -666,7 +666,7 @@ if rs==1
             satJDAY=datenum([satMETA.datestring, ' ', ...
              satMETA.timestring(1:end-1)], 'yyyy-mm-dd HH:MM:SS');
         end
-%           load Landsat bands (TIF-files)           
+%           load Landsat bands (TIF-files)
 %               green band
         satG=imread([fin_satpath, fin_satfolder_image, ...
          satMETA.bGfnamestring]);
@@ -676,15 +676,15 @@ if rs==1
 %               near infrared band
         satNIR=imread([fin_satpath, fin_satfolder_image, ...
             satMETA.bNIRfnamestring]);
-%               if Mapping Toolbox is available, e.g. 
+%               if Mapping Toolbox is available, e.g.
 %         [satG, satG_R, satG_bbox]=geotiffread([fin_folder, ...
 %             fin_satfolder, fin_satfolder_image, satMETA.bGfnamestring]);
 %         geotiffinfo([fin_satpath, fin_satfolder_image, ...
 %             satMETA.bGfnamestring])
 %         figure()
 %         mapshow(satG, satG_R)
-%         close all; 
-    else 
+%         close all;
+    else
         error('Landsat folder name and/or subfolder names do not exist.')
     end
 elseif rs==2
@@ -709,7 +709,7 @@ elseif rs==2
         header_sat(i,:)=cellstr(dummy);
         satMETA.(dummynames{dummynr(i)})=str2num(dummy(dummypos(1):end));
     end
-%             shift coordinates from corner to pixel centre    
+%             shift coordinates from corner to pixel centre
     satMETA.x_ul=satMETA.x_ul+(0.5*satMETA.cellsize);
     satMETA.y_ul=satMETA.y_ul-(0.5*satMETA.cellsize)+(satMETA.nrows*satMETA.cellsize);
     clear i dummy dummypos dummynames dummynr i
@@ -773,7 +773,7 @@ if rsms>0
         end
         headerv_satmask(4,1)=headerv_satmask(4,1)-(headerv_satmask(2,1)*headerv_satmask(5,1));
         headerv_satmask(6,1)=255;
-        fclose(fid);  
+        fclose(fid);
         clear i ans fid dummy dummypos
 %           read fmask file
         disp(['Load fmask map of satellite image ''', fin_satpath, ...
@@ -787,8 +787,8 @@ if rsms>0
         fclose(fid);
         clear ans fid
     end
-%       check if the satellite data and its mask data have the same 
-%       cell size and registration point 
+%       check if the satellite data and its mask data have the same
+%       cell size and registration point
     if satMETA.cellsize==headerv_satmask(5,1)
         if mod(satMETA.x_ul, satMETA.cellsize)~= ...
         mod(headerv_satmask(3,1)+0.5*headerv_satmask(5,1), headerv_satmask(5,1))
@@ -827,7 +827,7 @@ if rsms>0
 %           1 = not clear or no observation
     satmask(satmask~=0)=1;
     satmask=logical(satmask);
-end 
+end
 %%%%%%%%%%%%%%%%%%%%%%%%% GCPs & DDS optimisation %%%%%%%%%%%%%%%%%%%%%%%%%
 if os==0
 % w/o GCPs and w/o DDS optimisation
@@ -835,7 +835,7 @@ if os==0
     X0=[cam(1,1), cam(2,1), cam_off(1), cam_rol, cam(1,2), cam(2,2), ...
      cam_off(2), cam_foc, cam_hei, cam_wid];
 else
-% w GCPs and w or w/o DDS optimisation    
+% w GCPs and w or w/o DDS optimisation
 %   first assumption: interactive optimisation (if os==2 will be changed to non-interactive later)
     os_intact='y';
     os_startval='y';
@@ -850,7 +850,7 @@ else
              cam(2,2), cam_off(2), cam_foc, cam_hei, cam_wid];
         end
 %       w GCPs and w or w/o DDS optimisation
-%           original RMSE value and projected coordinates of GCPs   
+%           original RMSE value and projected coordinates of GCPs
         [gcpRMSE_orig, gcpP]=DDS_RMSE_PRACTISE(X0, demWrcz, ...
          headerv_W, gcpW, pix_c, pix_r);
         if os>1
@@ -901,7 +901,7 @@ else
             if ~exist('gcpRMSE_opt', 'var') || Fopt<gcpRMSE_orig
                 gcpP_orig=gcpP;
             end
-%           optimal RMSE value and projected coordinates of GCPs        
+%           optimal RMSE value and projected coordinates of GCPs
             [gcpRMSE_opt, gcpP]=DDS_RMSE_PRACTISE(Xopt, demWrcz, headerv_W, ...
                 gcpW, pix_c, pix_r);
             clear Fopt
@@ -934,8 +934,8 @@ else
         box(axes1, 'on');
         hold(axes1, 'all');
         %
-        image(photo, 'Parent', axes1);                                                    
-        hold on        
+        image(photo, 'Parent', axes1);
+        hold on
         plot(gcpW(4,:), gcpW(5,:), 'gx', 'LineWidth', 2, 'MarkerSize', os_MarkSiz+2)
         if os>1
             if gcpP_0_dummy==0
@@ -961,7 +961,7 @@ else
                  'Calculated GCP positions before DDS optimisation', ...
                  'Calculated GCP positions before last successful DDS optimisation', ...
                  'Calculated GCP positions after DDS optimisation');
-            else 
+            else
                 Leg=legend('GCP positions', ...
                  'Calculated GCP positions before DDS optimisation', ...
                  'Calculated GCP positions after DDS optimisation');
@@ -973,14 +973,14 @@ else
             fig1_leg_pos=get(fig1_leg(1), 'position');
             set(fig1_leg(1), 'position', fig1_leg_pos+[0, 0, 0.03, 0]);
         end
-        % 
+        %
         clear axes1 Leg fig1_leg fig1_leg_pos
 %       interactive questions
         if os==3
             if os_quest==1
-                if gcpRMSE_opt<gcpRMSE_optthres 
+                if gcpRMSE_opt<gcpRMSE_optthres
                     disp(['The optimised RMSE distance between real and calculated GCPs (', ...
-                        num2str(gcpRMSE_opt), ') is below the set threshold of ', num2str(gcpRMSE_optthres)])          
+                        num2str(gcpRMSE_opt), ') is below the set threshold of ', num2str(gcpRMSE_optthres)])
                     if ~IsOctave_PRACTISE()
 %                         uisetpref('clearall'); % to reset the dialog box properties
                         oscs_ok1=uigetpref('userhelp', 'ctrlc', 'Hint', ...
@@ -989,7 +989,7 @@ else
                             'Use the keyboard combination ''Ctrl + C'' when the ', ...
                             'message box is active to allow this option.'], ...
                             'Ok');
-                    end   
+                    end
                     set(figure1, 'visible', 'on');
                     button=questdlg('Do you want to run the optimisation again?', ...
                         'GCPs and DDS optimisation', 'Yes using start values', ...
@@ -1029,7 +1029,7 @@ else
                 set(figure1, 'visible', 'on');
                 button=questdlg('Do you want to optimise the values further?', ...
                     'GCPs and DDS optimisation', 'Yes using old optimised values', ...
-                    'Yes using new optimised values', 'No', 'Yes using old optimised values'); 
+                    'Yes using new optimised values', 'No', 'Yes using old optimised values');
             end
             switch button
                 case ''
@@ -1212,8 +1212,8 @@ if vs==1
     demWvs=(demWrcz/headerv_W(5,1))-cam_rc(3,1);
 %       create radial buffer zone around camera location
 %           j=col i=row cam_rc(1,1)=col cam_rc(2,1)=row
-    [j i]=meshgrid(1:size(demWvs, 2), 1:size(demWvs, 1)); 
-    buffer_radius_rc=buffer_radius/headerv_W(5,1); 
+    [j i]=meshgrid(1:size(demWvs, 2), 1:size(demWvs, 1));
+    buffer_radius_rc=buffer_radius/headerv_W(5,1);
     buffer_cam=sqrt((j-cam_rc(1,1)).^2+(i-cam_rc(2,1)).^2)<=buffer_radius_rc;
     demWvs(buffer_cam==1)=min(min(demWvs))-1; % smaller than minimum existing value
     clear i j buffer_radius_rc
@@ -1231,19 +1231,19 @@ if vs==1
 %       with N=0, E=pi/2, S=pi, W=3*pi/2)
 %           delta DEM in the viewing direction [DEM pixel] -> Cam target-Cam position
     N0_rc(1,1)=cam_rc(1,2)-cam_rc(1,1); % delta longitude (=delta cols)
-    N0_rc(2,1)=cam_rc(2,1)-cam_rc(2,2); % delta latitude (=-delta rows)        
+    N0_rc(2,1)=cam_rc(2,1)-cam_rc(2,2); % delta latitude (=-delta rows)
     N0_rc(3,1)=cam_rc(3,2)-cam_rc(3,1); % delta altitude
 %           calculate angles in viewing direction
     if N0_rc(2,1)>0 && N0_rc(1,1)>0 % delta latitude, delta longitude > 0 = NE
-        N0_rc_hor=pi/2-atan(N0_rc(2,1)/N0_rc(1,1)); 
+        N0_rc_hor=pi/2-atan(N0_rc(2,1)/N0_rc(1,1));
     elseif N0_rc(2,1)<0 && N0_rc(1,1)>0 % delta latitude < 0 & delta longitude > 0 = SE
-        N0_rc_hor=pi/2-atan(N0_rc(2,1)/N0_rc(1,1)); 
+        N0_rc_hor=pi/2-atan(N0_rc(2,1)/N0_rc(1,1));
     elseif N0_rc(2,1)<0 && N0_rc(1,1)<0 % delta latitude, delta longitude < 0 = SW
         N0_rc_hor=3*pi/2-atan(N0_rc(2,1)/N0_rc(1,1));
     elseif N0_rc(2,1)>0 && N0_rc(1,1)<0 % delta latitude > 0 & delta longitude < 0 = NW
-        N0_rc_hor=3*pi/2-atan(N0_rc(2,1)/N0_rc(1,1)); 
+        N0_rc_hor=3*pi/2-atan(N0_rc(2,1)/N0_rc(1,1));
     elseif N0_rc(2,1)==0 && N0_rc(1,1)==0
-        error(['Camera position and target at the same xy ', ... 
+        error(['Camera position and target at the same xy ', ...
             'coordinate, observing the sky or the soil in nadir ', ...
             'position does not work yet.'])
     elseif N0_rc(2,1)==0
@@ -1308,24 +1308,24 @@ if vs==1
          'as lower values are not usable. If wanted, use 2 different ', ...
          'viewshed calculations and intersect them!'])
     end
-    clear FOV_hor FOV_vert  
+    clear FOV_hor FOV_vert
 %       viewshed raster initialization
     viewW=-1*ones(headerv_W(2,1), headerv_W(1,1));
     viewW(isnan(demWvs))=NaN;
 %   initialization of temporary rasters and variables
 %       R=maximal normalized altitude of visibile pixel
-%       index=number-indexed raster (row 1 & col 1 = 1, row 2 & col 1 = 2, ...) 
-    R=viewW; 
+%       index=number-indexed raster (row 1 & col 1 = 1, row 2 & col 1 = 2, ...)
+    R=viewW;
     index=reshape([1:headerv_W(2,1)*headerv_W(1,1)], headerv_W(2,1), []);
     r=cam_rc(2,1);
     c=cam_rc(1,1);
-%   viewshed 
-%       2 process steps for specified camera angles computation: 
+%   viewshed
+%       2 process steps for specified camera angles computation:
 %           1) algorithm assumes that all pixels in the chosen sectors
 %              that lie inbetween the vertical angles are visible
 %           2) but azimuth angles are saved in case of vertical visibility and
 %              taken out later if they do not fulfill the azimuth conditions
-%       calculation of the viewpoint and the 8 neighbouring pixels 
+%       calculation of the viewpoint and the 8 neighbouring pixels
     viewW(r-1,c+1)=pi/4; %NE
     viewW(r+1,c+1)=3/4*pi; %SE
     viewW(r+1,c-1)=pi+pi/4; %SW
@@ -1345,7 +1345,7 @@ if vs==1
                 if Vert(2,1)>-pi/2
                     viewW(r,c)=-1;
                 else
-                    viewW(r,c)=N0_rc_hor; 
+                    viewW(r,c)=N0_rc_hor;
                 end
             end
         end
@@ -1363,7 +1363,7 @@ if vs==1
             azidummy=0;
         elseif dir==2 % E
 %               transpose to S direction
-            demdummy=demWvs(r,c+1:headerv_W(1,1))'; 
+            demdummy=demWvs(r,c+1:headerv_W(1,1))';
             viewdummy=viewW(r,c+1:headerv_W(1,1))';
             Rdummy=R(r,c+1:headerv_W(1,1))';
             indexdummy=index(r,c+1:headerv_W(1,1))';
@@ -1385,7 +1385,7 @@ if vs==1
 %           S direction or rotated/mirrored other directions to S direction
         for l=2:size(demdummy, 1)
             Z=Rdummy(l-1,1)*l/(l-1);
-            if isfinite(demdummy(l,1)) 
+            if isfinite(demdummy(l,1))
                 if demdummy(l,1)>Z
                     vertdummy=atan(demdummy(l)/l);
                     if vertdummy>Vert(1,1) || vertdummy<Vert(2,1)
@@ -1407,7 +1407,7 @@ if vs==1
         R(indexdummy)=Rdummy;
         clear demdummy viewdummy Rdummy indexdummy
     end
-    clear l dir azidummy 
+    clear l dir azidummy
 %       calculation of the chosen sectors
 %           using proxy arrays
 %               W-NW + NW-N = W-N, S-SW + SW-W = S-W,
@@ -1427,8 +1427,8 @@ if vs==1
             viewdummy=flipud(fliplr(viewW(r:headerv_W(2,1),c:headerv_W(1,1))));
             Rdummy=flipud(fliplr(R(r:headerv_W(2,1),c:headerv_W(1,1))));
             indexdummy=flipud(fliplr(index(r:headerv_W(2,1),c:headerv_W(1,1))));
-            secdummy=pi/2; 
-        elseif dir==3 % W-SW & S-SW 
+            secdummy=pi/2;
+        elseif dir==3 % W-SW & S-SW
 %               upsidedown array (SW flipped to NW)
             demdummy=flipud(demWvs(r:headerv_W(2,1),1:c));
             viewdummy=flipud(viewW(r:headerv_W(2,1),1:c));
@@ -1440,7 +1440,7 @@ if vs==1
             viewdummy=viewW(1:r,1:c);
             Rdummy=R(1:r,1:c);
             indexdummy=index(1:r,1:c);
-            secdummy=3*pi/2; 
+            secdummy=3*pi/2;
         end
         rr=size(demdummy, 1);
         cc=size(demdummy, 2);
@@ -1509,7 +1509,7 @@ end % if vs==1
 toc
 disp('Starting projection')
 % prepare DEM dependent on the viewshed
-%   initialization 
+%   initialization
 demW=NaN(6, headerv_W(2,1)*headerv_W(1,1)); % if row, col included: 6
 k=0;
 %   DEM grid point coordinates (middle of pixel)
@@ -1528,36 +1528,36 @@ for i=1:headerv_W(1,1) % ncols
     end
 end
 demW=demW(1:6,isfinite(demW(1,:))); % if row, col included: 1:6
-clear i j k 
+clear i j k
 % prepare projection parameters
 %   in case that optimisation off
 toc
 if os<2
     Xopt=X0;
 end
-% project and scale the world coordinates (xyzW in m) to the photo plane 
+% project and scale the world coordinates (xyzW in m) to the photo plane
 % (crP in pixels)
-%   1) translate world reference system W to reference system T 
-%      -> set coordinate system origin = viewpoint 
-%   2) rotate reference system T to camera reference system C 
-%      -> set coordinate system axis in the directions right (U), up (V) 
+%   1) translate world reference system W to reference system T
+%      -> set coordinate system origin = viewpoint
+%   2) rotate reference system T to camera reference system C
+%      -> set coordinate system axis in the directions right (U), up (V)
 %      and depth (N) of image
 %   3) project and scale camera reference system C to perspective
 %   projection system P
-%      -> project to metric cam image using central projection 
+%      -> project to metric cam image using central projection
 %      (at depth of focal length)
 %      -> scale metric to pixel based image size
 %      -> translate to the origin of the 2D coordinate system of
 %      the photograph
 %      -> ceil to integer pixel values
 %   4) extract RGB pixel values and classify
-%      -> keep rows and columns of DEM (Arc/Info ASCII Grid)   
+%      -> keep rows and columns of DEM (Arc/Info ASCII Grid)
 %      -> keep pixel rows and columns of photograph
 %      -> extract RGB values for pixel rows and columns
 %      -> classify with one of the available methods
 %
-%   call steps 1) to 3) of DEM projection 
-%       
+%   call steps 1) to 3) of DEM projection
+%
 [demP]=Proj_PRACTISE(demW, Xopt, pix_c, pix_r, demWrcz, headerv_W);
 % loop for classification of multiple photographs
 for photoloop=1:N_images
@@ -1565,7 +1565,7 @@ for photoloop=1:N_images
 %   define the respective photo file
         fin_image=char(fin_images(photoloop));
 %   read photo
-        photo = imread([fin_imagepath, fin_image]); 
+        photo = imread([fin_imagepath, fin_image]);
         fin_imageDot=regexp(fin_image, '\.');
         f_name=fin_image(1:fin_imageDot-1);
         clear fin_imageDot
@@ -1585,11 +1585,11 @@ for photoloop=1:N_images
      fin_image, ''''])
     if photoloop==1
 %       initialize for 4)
-        if rs==0 
-%           DEMrow, ~col, PHOTOcol, ~row, RGB, PHOTOclass 
+        if rs==0
+%           DEMrow, ~col, PHOTOcol, ~row, RGB, PHOTOclass
             rgbimage=NaN(8, size(demW, 2));
         else
-%           ..., additional variable, DEMlongitude, ~latitude 
+%           ..., additional variable, DEMlongitude, ~latitude
             rgbimage=NaN(11, size(demW, 2));
         end
 %       4) extract RGB pixel values and classify
@@ -1606,7 +1606,7 @@ for photoloop=1:N_images
 %           delete NaNs
         i=find(isnan(rgbimage(1,:)));
         rgbimage(:,i)=[];
-%           extract pixel positions outside of the excluded photograph areas 
+%           extract pixel positions outside of the excluded photograph areas
 %         i=find((demP(1,:)>800 | demP(1,:)<400) & demP(2,:)<pix_r & demP(2,:)>0);
 %         demW(:,i)=[];
 %         demP(:,i)=[];
@@ -1629,19 +1629,19 @@ for photoloop=1:N_images
         end
 %           classification switch
         if cs==0
-            disp('Manual classification of snow: All visible pixels in investigation area') 
-%               initialisation 
+            disp('Manual classification of snow: All visible pixels in investigation area')
+%               initialisation
             rgbimage(8,:)=0; % no snow
 %               classification rule 1
             disp('with RGB values greater or equal than the specified thresholds in the bands')
-            disp(['Red ', num2str(thres_rgb(1,1)), ',']) 
-            disp(['Green ', num2str(thres_rgb(2,1)), ',']) 
-            disp(['Blue ', num2str(thres_rgb(3,1)), ',']) 
+            disp(['Red ', num2str(thres_rgb(1,1)), ','])
+            disp(['Green ', num2str(thres_rgb(2,1)), ','])
+            disp(['Blue ', num2str(thres_rgb(3,1)), ','])
             i=find(rgbimage(5,:)>=thres_rgb(1,1) & rgbimage(6,:)>=thres_rgb(2,1) & ...
                 rgbimage(7,:)>=thres_rgb(3,1));
 %               classification rule 2
             disp('and a maximum delta value (maximum to minimum RGB value) of a pixel')
-            disp(['less than ', num2str(delta_rgb), '.']) 
+            disp(['less than ', num2str(delta_rgb), '.'])
             j=find((max(rgbimage(5:7,i))-min(rgbimage(5:7,i)))<=delta_rgb);
 %               value assignment for complete investigation area
             rgbimage(8,i(j))=1; % snow
@@ -1653,7 +1653,7 @@ for photoloop=1:N_images
             elseif cs==2
                 disp('Automatic PCA-based classification: All visible pixels ')
             end
-            disp('in complete investigation area') 
+            disp('in complete investigation area')
 %               initialisation
             if cs==1
                 rgbimage(8,:)=0; % no snow
@@ -1662,7 +1662,7 @@ for photoloop=1:N_images
             if mod(movavgwindow, 2)==0
                 movavgwindow=movavgwindow+1;
                 maw_dummy=1;
-            else 
+            else
                 maw_dummy=0;
             end
             maw=movavgwindow;
@@ -1681,7 +1681,7 @@ for photoloop=1:N_images
 %            rgbhistmean1=rgbhistmean1([(ceil(maw/2)):end,1:(ceil(maw/2))-1]);
 %               slope of histogram
             rgbhistmeandiff=[diff(rgbhistmean1),NaN];
-%               first negative slope greater than or equal to threshold 
+%               first negative slope greater than or equal to threshold
             i=find(rgbhistmeandiff(round(tbo/factor):round(max(rgbimage(7,:))/factor))<0);
             i=i(1)+round(tbo/factor)-1;
 %               local minimum (first positive slope after negative slope)
@@ -1759,7 +1759,7 @@ for photoloop=1:N_images
                 rgbimage(8,rgbimage(8,:)<0)=0;
                 clear maxi mini
             end
-%           plot blue band (DN frequency) histogram 
+%           plot blue band (DN frequency) histogram
 %            close(figure(2));
 %            if IsOctave_PRACTISE()
 %                figure2=figure(2,'position',get(0,'screensize')+[100 50 -150 -150]);
@@ -1813,9 +1813,9 @@ for photoloop=1:N_images
         end
         if cs==0
             set(figure4, 'NumberTitle', 'off', 'Name', 'Manual snow cover classification');
-        elseif cs==1 
+        elseif cs==1
             set(figure4, 'NumberTitle', 'off', 'Name', 'Projection Result');
-        elseif cs==2 
+        elseif cs==2
             set(figure4, 'NumberTitle', 'off', 'Name', 'Automatic blue band + pca snow cover classification');
         end
         set(figure4, 'Color', [1 1 1], 'InvertHardcopy', 'off');
@@ -1831,7 +1831,7 @@ for photoloop=1:N_images
         box(axes1, 'on');
         hold(axes1, 'all');
         %
-        image(photo, 'Parent', axes1);                                                    
+        image(photo, 'Parent', axes1);
         if cs==0 || cs==1
             plot(rgbimage(3,(rgbimage(8,:)>=0)), rgbimage(4,(rgbimage(8,:)>=0)), '.', 'Color', [1 0 0], 'MarkerSize', cs_MarkSiz)
 %            plot(rgbimage(3,(rgbimage(8,:)==1)), rgbimage(4,(rgbimage(8,:)==1)), '.', 'Color', [1 0 0], 'MarkerSize', cs_MarkSiz)
@@ -1866,17 +1866,17 @@ for photoloop=1:N_images
         % interactive questions
         if cs_intact=='y'
             if cs==1
-                cs_quest=['Do you want to try a classification method ', ... 
-                 'other than the blue band classification?']; 
+                cs_quest=['Do you want to try a classification method ', ...
+                 'other than the blue band classification?'];
                 cs_answ1='Yes using the manual classification';
                 cs_answ2='Yes using the combined blue band and pca classification';
             elseif cs==0
-                button=['Do you want to try a classification method ', ... 
+                button=['Do you want to try a classification method ', ...
                  'other than the manual classification?'];
                 cs_answ1='Yes using the blue band classification';
                 cs_answ2='Yes using the combined blue band and pca classification';
             elseif cs==2
-                cs_quest=['Do you want to try a classification method ', ... 
+                cs_quest=['Do you want to try a classification method ', ...
                  'other than the combined blue band and pca classification?'];
                 cs_answ1='Yes using the manual classification';
                 cs_answ2='Yes using the blue band classification';
@@ -1914,7 +1914,7 @@ for photoloop=1:N_images
                 cs_enter={'Threshold blue band'; 'Moving average window'};
                 cs_def={'127'; '5'};
                 cs_title='Blue band classification';
-            elseif cs==2 
+            elseif cs==2
                 cs_enter={'Threshold blue band (snow)'; 'Moving average window (snow)'; ...
                     'Threshold blue band (rock)'};
                 cs_def={'127'; '5'; '63'};
@@ -1963,7 +1963,7 @@ for photoloop=1:N_images
         if rs==1
             disp('of a raw Landsat scene using a photo-calibrated NDSI threshold')
         elseif rs==2
-            disp('of a preprocessed NDSI map using a photo-calibrated threshold')	
+            disp('of a preprocessed NDSI map using a photo-calibrated threshold')
         end
 %       A) control that rgbimage/DEM pixel size is smaller or equal to the Landsat pixel
 %          size, in a optimum case at least 10 times smaller
@@ -2021,7 +2021,7 @@ for photoloop=1:N_images
             error(['Check if the bounding box coordinates and the order ', ...
                 '(N, E, S, W) are correct .'])
         end
-%               extract satellite image pixel centres inside bounding box  
+%               extract satellite image pixel centres inside bounding box
 %                   latitude and longitude
         satLAT=(satMETA.y_ul:-satMETA.cellsize:satMETA.y_ul-(satMETA.nrows-1)*satMETA.cellsize)'; % N to S
         i=find(satLAT<=satBB(1) & satLAT>=satBB(3));
@@ -2060,7 +2060,7 @@ for photoloop=1:N_images
             clear i j satG satMIR satNIR satLook
 %               set no data pixel to NaN
             i=find(satBBg_dn==satMETA.nodata | satBBmir_dn==satMETA.nodata | satBBnir_dn==satMETA.nodata);
-            satBBg_dn=double(satBBg_dn); 
+            satBBg_dn=double(satBBg_dn);
             satBBmir_dn=double(satBBmir_dn);
             satBBnir_dn=double(satBBnir_dn);
             satBBg_dn(i)=NaN;
@@ -2079,9 +2079,9 @@ for photoloop=1:N_images
                     (satBBnir_dn-satMETA.bNIRqcalmin)+satMETA.bNIRlmin;
 %                       set negative Radiances (due to Landsat 7 metadata parameters) to Zero
                 satBBg_rad(satBBg_rad<0)=0;
-                satBBmir_rad(satBBmir_rad<0)=0;    
+                satBBmir_rad(satBBmir_rad<0)=0;
                 satBBnir_rad(satBBnir_rad<0)=0;
-%                       set DN NaN to no data pixel and convert to 8bit uint again 
+%                       set DN NaN to no data pixel and convert to 8bit uint again
                 i=find(isnan(satBBg_dn) | isnan(satBBmir_dn) | isnan(satBBnir_dn));
                 satBBg_dn(i)=satMETA.nodata;
                 satBBmir_dn(i)=satMETA.nodata;
@@ -2106,12 +2106,12 @@ for photoloop=1:N_images
                 satBBg_refl=(satMETA.bGreflmult*satBBg_dn+satMETA.bGrefladd)/cosd(90-satMETA.sunelev);
                 satBBmir_refl=(satMETA.bMIRreflmult*satBBmir_dn+satMETA.bMIRrefladd)/cosd(90-satMETA.sunelev);
                 satBBnir_refl=(satMETA.bNIRreflmult*satBBnir_dn+satMETA.bNIRrefladd)/cosd(90-satMETA.sunelev);
-%                       set negative Reflectances (due to Landsat 8 
+%                       set negative Reflectances (due to Landsat 8
 %                       metadata parameters) to Zero
                 satBBg_refl(satBBg_refl<0)=0;
-                satBBmir_refl(satBBmir_refl<0)=0;    
+                satBBmir_refl(satBBmir_refl<0)=0;
                 satBBnir_refl(satBBnir_refl<0)=0;
-%                       set DN NaN to no data pixel and convert to 8bit uint again 
+%                       set DN NaN to no data pixel and convert to 8bit uint again
                 i=find(isnan(satBBg_dn) | isnan(satBBmir_dn) | isnan(satBBnir_dn));
                 satBBg_dn(i)=satMETA.nodata;
                 satBBmir_dn(i)=satMETA.nodata;
@@ -2150,7 +2150,7 @@ for photoloop=1:N_images
                 dummynr=find(dummy_ij<0)
                 dummydir={'North', 'East', 'South', 'West'}
                 disp('Warning: The satellite image ROI extent to the ')
-                for i=1:length(dummynr)    
+                for i=1:length(dummynr)
                     disp(dummydir{dummynr(i)})
                 end
                 disp(['is larger than the available mask data, ', ...
@@ -2183,7 +2183,7 @@ for photoloop=1:N_images
 %       C) find out which rgbimage pixel is belonging to which Landsat pixel
         if (max(rgbimage(11,:))<satBB(3)) || (max(rgbimage(10,:))<satBB(4)) || ...
          (min(rgbimage(11,:))>satBB(1)) || (min(rgbimage(10,:))>satBB(2))
-            error(['The photographed area is not covered by the extent of the ', ...        
+            error(['The photographed area is not covered by the extent of the ', ...
              'bounding box of the Landsat 7 image.'])
         elseif (max(rgbimage(11,:))>satBB(1)) || (max(rgbimage(10,:))>satBB(2)) || ...
          (min(rgbimage(11,:))<satBB(3)) || (min(rgbimage(10,:))<satBB(4))
@@ -2191,7 +2191,7 @@ for photoloop=1:N_images
              'of the bounding box of the Landsat 7 image, only the overlapping area ', ...
              'will be used in the optimisation.'])
         end
-%           initialise indices matrix 
+%           initialise indices matrix
         index=reshape(1:size(satBBlat, 1)*size(satBBlat, 2), size(satBBlat));
 %           find overlap of photographed DEM pixel and Landsat bounding box
         indBB=find(rgbimage(10,:)>=min(min(satBBlong))-0.5*satMETA.cellsize & ...
@@ -2199,11 +2199,11 @@ for photoloop=1:N_images
             rgbimage(11,:)>=min(min(satBBlat))-0.5*satMETA.cellsize & ...
             rgbimage(11,:)<=max(max(satBBlat))+0.5*satMETA.cellsize);
         indBBnear=griddata(satBBlong/1e5, satBBlat/1e6, index, rgbimage(10,:)/1e5, rgbimage(11,:)/1e6, 'nearest');
-%           merge overlapping photo and satellite pixel    
+%           merge overlapping photo and satellite pixel
         PhRs=NaN(2, length(rgbimage(8,:)));
 %               fill with photo classification
         PhRs(1,indBB)=rgbimage(8,indBB);
-%               remove optionally photo pixel with classification 'unsure' from optimisation 
+%               remove optionally photo pixel with classification 'unsure' from optimisation
         if rsps==0
             i=find(rgbimage(8,:)<1 & rgbimage(8,:)>0);
             PhRs(1,i)=NaN;
@@ -2241,7 +2241,7 @@ for photoloop=1:N_images
 %       F) classify satellite image pixels (in bounding box) with the optimised NDSI threshold
         satBBmap=satBBndsi;
         satBBmap(satBBndsi>NDSIthresOpt_detail & satBBndsi<=1)=1;
-        satBBmap(satBBndsi<=NDSIthresOpt_detail & satBBndsi>-1)=0;    
+        satBBmap(satBBndsi<=NDSIthresOpt_detail & satBBndsi>-1)=0;
 %           plot LandsatLook image (or NDSI map) and the classified maps of photograph and satellite image
         close(figure(5));
         if IsOctave_PRACTISE()
@@ -2252,9 +2252,9 @@ for photoloop=1:N_images
             'PaperUnits', 'centimeters', 'PaperPosition', [0 0 50 35], ...
             'PaperSize', [50 35], 'PaperType', '<custom>');
         end
-        if rs==1 
+        if rs==1
             set(figure5, 'NumberTitle', 'off', 'Name', 'Optimised Landsat snow cover map');
-        elseif rs==2 
+        elseif rs==2
             set(figure5, 'NumberTitle', 'off', 'Name', 'Optimised snow cover map of preprocessed NDSI data');
         end
         set(figure5, 'Color', [1 1 1], 'InvertHardcopy', 'off');
@@ -2287,7 +2287,7 @@ for photoloop=1:N_images
             end
             clear satBBndsi_dummy
         end
-        set(gca, 'YDir', 'normal');  
+        set(gca, 'YDir', 'normal');
         hold on
         if cs==2 && rsps==1
             plot(rgbimage(10,(rgbimage(8,:)<1 & rgbimage(8,:)>0)), ...
@@ -2330,11 +2330,11 @@ for photoloop=1:N_images
 %       variables (MAT-file)
     fout_mat=[f_name, '_proj.mat'];
 %       photo
-%           Viewshed (Arc/Info ASCII Grid) 
+%           Viewshed (Arc/Info ASCII Grid)
     if vs==1 && photoloop==1
         fout_viewW_asc=[f_name, '.view.asc'];
     end
-%           Classification (Arc/Info ASCII Grid) 
+%           Classification (Arc/Info ASCII Grid)
     fout_classW_asc=[f_name, '_class.asc'];
 %       satellite image
     if rs==1
@@ -2354,7 +2354,7 @@ for photoloop=1:N_images
     elseif os==2 || os==3
         fout_figname1=[f_name, '_GCPs_DDS_opti'];
     end
-%           photograph 
+%           photograph
     if cs==0
 %               manual
         fout_figname4=[f_name, '_', num2str(thres_rgb(1,1)), ...
@@ -2384,7 +2384,7 @@ for photoloop=1:N_images
              regexprep(num2str(NDSIthresOpt), '\.', ...
              '_')];
         end
-    end   
+    end
 %   write
 %       Arc/Info ASCII Grids
     if headerv_W(6,1)<=2 && headerv_W(6,1)>=-1
@@ -2406,7 +2406,7 @@ for photoloop=1:N_images
         fprintf(fid, '%s\n', char(header_W(i,:)));
     end
     fclose(fid);
-    clear i fid 
+    clear i fid
     dlmwrite([fout_folder, fout_classW_asc], classW, 'delimiter', ' ', '-append')
 %               viewshed
     if vs==1 && photoloop==1
@@ -2419,7 +2419,7 @@ for photoloop=1:N_images
             fprintf(fid, '%s\n', char(header_W(i,:)));
         end
         fclose(fid);
-        clear i fid 
+        clear i fid
         dlmwrite([fout_folder, fout_viewW_asc], viewW, 'delimiter', ' ', '-append')
     end
     if rs>0
@@ -2430,7 +2430,7 @@ for photoloop=1:N_images
         end
         clear i dummystr
 %           satellite image (bounding box)
-%               NDSI 
+%               NDSI
         if rs==1
             satBBndsi(isnan(satBBndsi))=headerv_W(6,1);
             fid=fopen([fout_folder, fout_ndsi_asc], 'w');
@@ -2441,7 +2441,7 @@ for photoloop=1:N_images
                 fprintf(fid, '%s\n', char(satHeader(i,:)));
             end
             fclose(fid);
-            clear i fid 
+            clear i fid
             dlmwrite([fout_folder, fout_ndsi_asc], satBBndsi, 'delimiter', ' ', '-append')
         end
 %               map
@@ -2454,30 +2454,30 @@ for photoloop=1:N_images
             fprintf(fid, '%s\n', char(satHeader(i,:)));
         end
         fclose(fid);
-        clear i fid 
+        clear i fid
         dlmwrite([fout_folder, fout_satmap_asc], satBBmap, 'delimiter', ...
          ' ', '-append')
     end
     disp('Load workspace using the command:')
-    disp(['load(''', fout_folder, fout_mat, ''')']) 
+    disp(['load(''', fout_folder, fout_mat, ''')'])
 %       Matlab/Octave figures
 %           photograph
     if os>1 || (os==1 && photoloop==1)
 %               GCPs (and DDS optimisation)
         if IsOctave_PRACTISE()
             hgsave(figure(1), [fout_folder, fout_figname1, '.ofig']);
-              %  Load in Octave and 
+              %  Load in Octave and
               %  get graphics, axes, object and legend handles for 'set'-options
               %   hgload([fout_folder, fout_figname1,'.ofig']);
               %   fig1_f=get(gcf);
               %   fig1_a=get(gca);
               %   fig1_o=get(gco);
               %   fig1_l=get(gcf,'children')
-              %      to test if fig1_l(1),fig1_l(2),...: 
-              %   set(fig1_l(1),'color',[0 0 0]); set(fig1_l(1),'color',[1 1 1]) 
+              %      to test if fig1_l(1),fig1_l(2),...:
+              %   set(fig1_l(1),'color',[0 0 0]); set(fig1_l(1),'color',[1 1 1])
             %dummy_pos=get(figure(1),'position');
             %print (figure(1), [fout_folder, fout_figname1, '.png'], ...
-            %  ['-S', num2str(dummy_pos(3)), ',', num2str(dummy_pos(4))]) 
+            %  ['-S', num2str(dummy_pos(3)), ',', num2str(dummy_pos(4))])
             %clear dummy_pos
         else
             saveas(figure(1), [fout_folder, fout_figname1], 'fig');
@@ -2503,7 +2503,7 @@ for photoloop=1:N_images
         if IsOctave_PRACTISE()
             hgsave(figure(5), [fout_folder, fout_figname5, '.ofig']);
         else
-            saveas(figure(5), [fout_folder, fout_figname5], 'fig');    
+            saveas(figure(5), [fout_folder, fout_figname5], 'fig');
         end
     end
 %   save variables
@@ -2523,7 +2523,7 @@ for photoloop=1:N_images
         save([fout_folder, fout_mat], 'fin_viewWpath', 'fin_viewW', '-append');
     elseif vs==1
         save([fout_folder, fout_mat], 'fout_viewW_asc', 'buffer_radius', ...
-            'viewAzi', 'viewAziSec', 'azi_sec_name', 'Vert', '-append'); 
+            'viewAzi', 'viewAziSec', 'azi_sec_name', 'Vert', '-append');
     end
     if os>0
         save([fout_folder, fout_mat], 'gcpW_name', 'gcpW', 'gcpP', ...
@@ -2539,7 +2539,7 @@ for photoloop=1:N_images
             end
             if gcpRMSE_orig~=gcpRMSE_0
                 save([fout_folder, fout_mat], 'gcpRMSE_0', 'gcpP_0', ...
-                 'X_0', 'cam_0', 'cam_rc_0', '-append');            
+                 'X_0', 'cam_0', 'cam_rc_0', '-append');
             end
             if os==3
                save([fout_folder, fout_mat], 'gcpRMSE_optthres', ...
@@ -2579,7 +2579,7 @@ for photoloop=1:N_images
              'fout_ndsi_asc', 'satBBg_dn', 'satBBg_refl', ...
              'satBBnir_dn', 'satBBnir_refl', 'satBBmir_dn', ...
              'satBBmir_refl', 'satMTL', '-append');
-            if exist('satBBlook', 'var')    
+            if exist('satBBlook', 'var')
                 save([fout_folder, fout_mat], 'fin_satfolder_look', ...
                  'fin_satname_look', '-append');
             end
@@ -2605,4 +2605,4 @@ for photoloop=1:N_images
 end
 disp('PRACTISE was executed successfully.')
 diary off
-clear all                                           
+clear all
